@@ -1,0 +1,63 @@
+/* 重置样式 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+}
+
+.sidebar {
+    width: auto; /* 自動適應內容寬度 */
+    height: auto; /* 自動適應內容高度 */
+    position: fixed;
+    top: 0;
+    z-index: 1000;
+}
+
+/* 表格样式 */
+table {
+    width: 180px; /* 設置表格寬度 */
+    border-collapse: collapse;
+}
+
+table td {
+    font-size: 20px;
+    font-weight: bold;
+    color: #333;
+    background-color: #f8f9fa;
+    text-align: center;
+    padding: 10px 15px;
+    margin-bottom: 5px;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+table td:hover {
+    background-color: #007bff;
+    color: white;
+    transform: translateY(-3px);
+    box-shadow: 0 3px 8px rgba(0, 123, 255, 0.3);
+}
+
+table td:active {
+    transform: translateY(1px);
+}
+
+/* 美化滚动条 */
+::-webkit-scrollbar {
+    width: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #007bff;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background-color: #f8f9fa;
+}

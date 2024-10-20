@@ -1,0 +1,28 @@
+<!-- src/main/resources/templates/header.html -->
+<div th:fragment="header">
+    <div class="search-bar" style="display: flex; align-items: center; gap: 20px; width: 100%; justify-content: center;">
+        
+        <!-- Home 按鈕，位於搜尋欄左方 -->
+        <button onclick="window.location.href='/mall/Home'" style="padding: 10px 20px; font-size: 16px; cursor: pointer;">
+            Home
+        </button>
+
+        <!-- 搜尋欄，使用表單提交來觸發搜尋 -->
+        <form action="/mall/search" method="get" style="display: flex; justify-content: center; width: 100%; max-width: 600px;">
+            <input type="text" name="productName" placeholder="輸入商品名稱搜尋" style="padding: 8px; width: 50%;">
+            <button type="submit" style="padding: 10px 20px; font-size: 16px; cursor: pointer; margin-left: 10px;">
+                搜尋
+            </button>
+        </form>
+
+        <!-- 人員管理 按鈕 -->
+        <button onclick="window.location.href='/user/management'" style="padding: 10px 20px; font-size: 16px; cursor: pointer;">
+            人員管理
+        </button>
+
+        <!-- 登出按钮 -->
+        <button onclick="window.location.href='/user/login'" style="padding: 10px 20px; font-size: 16px; cursor: pointer;">
+            登出
+        </button>
+    </div>
+</div>

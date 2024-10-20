@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>更新商品</title>
+    <link rel="stylesheet" href="/css/editProductForm.css">
+</head>
+<body>
+
+    <div class="form-container">
+        <!-- 商品圖片區域 -->
+        <div class="image-container" id="imagePreview">
+            <img th:if="${product.imageUrl != null}" th:src="@{${product.imageUrl}}" alt="商品圖片" style="max-width: 100%; max-height: 100%;">
+            <div th:if="${product.imageUrl == null}">無商品圖片</div>
+        </div>
+
+        <!-- 商品詳細內容 -->
+        <div class="form-content">
+            <h2>更新商品</h2>
+
+            <!-- 錯誤消息展示 -->
+            <div th:if="${errorMessage}" class="error-message" th:text="${errorMessage}"></div>
+
+            <!-- 表單提交 -->
+            <form th:action="@{/mall/product/edit/{productId}(productId=${product.productId})}" method="post" enctype="multipart/form-data">
+                <input type="hidden" name="productId" th:value="${product.productId}">
+
+                <label for="productName">商品名稱：</label>
+                <input type="text" id="productName" name="productName" th:value="${product.productName}" required>
+
+                <label for="category">商品分類：</label>
+                <select id="category" name="category" required>
+                    <option value="FOOD" th:selected="${product.category == 'FOOD'}">食品</option>
+                    <option value="CLOTHING" th:selected="${product.category == 'CLOTHING'}">服裝</option>
+                    <option value="SHELTER" th:selected="${product.category == 'SHELTER'}">居住</option>
+                    <option value="TRANSPORTATION" th:selected="${product.category == 'TRANSPORTATION'}">交通</option>
+                    <option value="EDUCATION" th:selected="${product.category == 'EDUCATION'}">教育</option>
+                    <option value="ENTERTAINMENT" th:selected="${product.category == 'ENTERTAINMENT'}">娛樂</option>
+                </select>
+
+                <label for="price">商品價格：</label>
+                <input type="number" id="price" name="price" th:value="${product.price}" required>
+
+                <label for="stock">商品庫存：</label>
+                <input type="number" id="stock" name="stock" th:value="${product.stock}" required>
+
+                <label for="description">商品描述：</label>
+                <textarea id="description" name="description" required th:text="${product.description}"></textarea>
+
+                <label for="imageUrl">商品圖片：</label>
+                <input type="file" id="imageUrl" name="imageUrl" accept="image/*" onchange="previewImage(event)">
+
+                <button type="submit">保存修改</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function previewImage(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const base64String = e.target.result;
+
+                    // 清除舊的預覽
+                    const preview = document.getElementById("imagePreview");
+                    preview.innerHTML = ''; // 清空預覽容器
+
+                    // 添加新的圖片
+                    const imgElement = document.createElement("img");
+                    imgElement.src = base64String;
+                    imgElement.alt = "商品圖片";
+                    imgElement.style.maxWidth = "100%";
+                    imgElement.style.maxHeight = "100%";
+                    preview.appendChild(imgElement);
+                };
+                reader.readAsDataURL(file);
+            } else {
+                // 如果没有選擇圖片，清空預覽
+                const preview = document.getElementById("imagePreview");
+                preview.innerHTML = '<div>無商品圖片</div>';
+            }
+        }
+    </script>
+
+</body>
+</html>

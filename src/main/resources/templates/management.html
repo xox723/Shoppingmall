@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>人員管理</title>
+    
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 12px;
+            text-align: center;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        input, select {
+            width: 100%;
+            padding: 5px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        button {
+            padding: 5px 10px;
+            cursor: pointer;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 4px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .add-button {
+            margin-top: 20px;
+            text-align: center;
+        }
+        .error-message {
+            color: red;
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 引用 header 片段 -->
+    <div th:replace="~{/fragments/header :: header}"></div>
+
+    <h2>人員管理</h2>
+
+    <!-- 未授權用戶跳轉 -->
+    <div sec:authorize="!hasRole('ROLE_Admin')">
+        <script>
+            alert("您沒有權限");
+            window.location.href = "/mall/Home";  // 跳轉到登錄頁面
+        </script>
+    </div>
+
+    <!-- 人員管理表格 -->
+    <table>
+        <thead>
+            <tr>
+                <th>用戶 ID</th>
+                <th>姓名</th>
+                <th>信箱</th>
+                <th>電話</th>
+                <th>權限</th>
+                <th>入職時間</th>
+                <th>編輯</th>
+                <th>刪除</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="user : ${users}">
+                <form th:action="@{/user/update}" method="post">
+                    <td>
+                        <span th:text="${user.userId}"></span>
+                        <input type="hidden" name="userId" th:value="${user.userId}" />
+                    </td>
+                    <td>
+                        <input type="text" name="userName" th:value="${user.userName}" />
+                    </td>
+                    <td>
+                        <input type="email" name="email" th:value="${user.email}" />
+                    </td>
+                    <td>
+                        <input type="text" name="phone" th:value="${user.phone}" />
+                    </td>
+                    <td>
+                        <select name="role">
+                            <option th:value="User" th:selected="${user.role.name() eq 'User'}">User</option>
+                            <option th:value="Admin" th:selected="${user.role.name() eq 'Admin'}">Admin</option>
+                        </select>
+                    </td>
+                    <td th:text="${user.createdTime}"></td>
+                    <td>
+                        <button type="submit">保存</button>
+                    </td>
+                </form>
+                <td>
+                    <form th:action="@{/user/delete}" method="post" style="display:inline;">
+                        <input type="hidden" name="userId" th:value="${user.userId}" />
+                        <button type="submit" style="background-color: red;" 
+                                onclick="return confirm('確定要刪除該用戶嗎？')">刪除</button>
+                    </form>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- 新增人員按鈕 -->
+    <div class="add-button">
+        <button onclick="window.location.href='/user/adduser'" 
+                style="padding: 10px 20px; font-size: 16px; cursor: pointer;">
+            新增人員
+        </button>
+    </div>
+</body>
+</html>

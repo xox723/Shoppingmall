@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <style>
+        /* 重置样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+        }
+
+        .sidebar {
+            width: 220px;
+            padding: 20px;
+            height: 100vh;
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            top: 70px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* 表格样式 */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            border-spacing: 0; /* 移除单元格之间的间距 */
+        }
+
+        table td {
+            font-size: 50px; 
+            font-weight: bold;
+            color: #333;
+            text-align: center;
+            padding: 20px;
+            margin-bottom: 10px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            
+        }
+
+        table td:hover {
+            background-color: #007bff;
+            color: white;
+            transform: translateY(-5px);
+            box-shadow: 0 5px 10px rgba(0, 123, 255, 0.3);
+        }
+
+        table td:active {
+            transform: translateY(2px);
+        }
+
+        /* 美化滚动条 */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background-color: #007bff;
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background-color: #f8f9fa;
+        }
+
+    </style>
+</head>
+<body>
+<div th:fragment="sidebar">
+    <div class="sidebar">
+        <table>
+            <tr>
+                <td onclick="filterProducts('FOOD')">食品</td>
+            </tr>
+            <tr>
+                <td onclick="filterProducts('CLOTHING')">服装</td>
+            </tr>
+            <tr>
+                <td onclick="filterProducts('SHELTER')">居住</td>
+            </tr>
+            <tr>
+                <td onclick="filterProducts('TRANSPORTATION')">交通</td>
+            </tr>
+            <tr>
+                <td onclick="filterProducts('EDUCATION')">教育</td>
+            </tr>
+            <tr>
+                <td onclick="filterProducts('ENTERTAINMENT')">娱樂</td>
+            </tr>
+        </table>
+    </div>
+
+    <script>
+        function filterProducts(category) {
+            window.location.href = '/mall/category?category=' + category;
+        }
+    </script>
+</div>
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>登入頁面</title>
+    <link rel="stylesheet" href="/css/login.css">
+</head>
+<body>
+    <div class="container">
+        <div class="tabs">
+            <div class="active" onclick="showLogin()">登入</div>
+            <div onclick="location.href='/user/register'" th:href="@{/register}">註冊</div> <!-- 使用 th:href 指定跳转路径 -->
+        </div>
+
+        <!-- 登入區域 -->
+        <div id="loginSection">
+            <h2>使用帳號登入：</h2>
+            
+            <form id="loginForm" th:action="@{/user/login}" method="post">
+                <input type="text" name="email" placeholder="電子郵件" required>
+                <input type="password" name="password" placeholder="密碼" required>
+                <button type="submit">登入</button>
+            </form>
+
+            <!-- 显示错误消息 -->
+            <div class="error" th:if="${param.error}">
+                Invalid email or password
+            </div>
+        </div>
+    </div>
+</body>
+</html>

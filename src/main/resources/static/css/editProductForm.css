@@ -1,0 +1,75 @@
+@charset "UTF-8";
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+}
+
+.form-container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 70%;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.image-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 200px;
+    height: 200px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: box-shadow 0.3s ease;
+}
+
+.image-container:hover {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.image-container img {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.form-content {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 60%;
+}
+
+label {
+    font-weight: bold;
+}
+
+input[type="text"], input[type="number"], textarea, select, input[type="file"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+button {
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+.error-message {
+    color: red;
+    margin-bottom: 20px;
+}

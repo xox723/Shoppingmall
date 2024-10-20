@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>新增人員</title>
+    <link rel="stylesheet" href="/css/register.css">
+</head>
+<body>
+<div class="container">
+    <h2>新增人員</h2>
+    <form th:action="@{/user/adduser}" method="post">
+        <div>
+            <label for="username">姓名:</label>
+            <input type="text" id="username" name="username" required>
+        </div>
+        <div>
+            <label for="email">信箱:</label>
+            <input type="email" id="email" name="email" required>
+        </div>
+        <div>
+            <label for="password">密碼:</label>
+            <input type="password" id="password" name="password" required>
+        </div>
+        <div>
+            <label for="birthday">生日:</label>
+            <input type="date" id="birthday" name="birthday" required>
+        </div>
+        <div>
+            <label for="gender">性別:</label>
+            <select id="gender" name="gender" required>
+                <option value="Male">男</option>
+                <option value="FeMale">女</option>
+                <option value="Other">其他</option>
+            </select>
+        </div>
+        <div>
+            <label for="address">地址:</label>
+            <input type="text" id="address" name="address" required>
+        </div>
+        <div>
+            <label for="phone">電話:</label>
+            <input type="text" id="phone" name="phone" required>
+        </div>
+        <button type="submit">新增人員</button>
+    </form>
+    <p th:if="${error}" th:text="${error}"></p>
+</div>
+</body>
+</html>

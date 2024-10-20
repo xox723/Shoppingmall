@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="商品管理"></title>
+    
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .container {
+            display: flex;
+            margin-top: 80px;
+        }
+
+        .product-section {
+            flex-grow: 1;
+            padding: 20px;
+            margin-left: 220px;
+            background-color: white;
+        }
+
+        .category-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .add-product-button {
+            display: inline-block;
+            padding: 10px 20px;
+            margin-bottom: 20px;
+            background-color: #007bff;
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s, transform 0.3s;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .add-product-button:hover {
+            background-color: #0056b3;
+            transform: scale(1.05);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #f8f9fa;
+            color: #333;
+        }
+
+        .product-buttons {
+            display: flex;
+            justify-content: center; /* 確保按鈕居中 */
+            gap: 10px; /* 增加按鈕之間的間距 */
+            padding: 8px 0;
+        }
+
+        .product-buttons a {
+            display: inline-block;
+            padding: 8px 16px;
+            border-radius: 5px;
+            font-weight: bold;
+            text-decoration: none;
+            text-align: center;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        .edit-button {
+            background-color: #28a745;
+            color: white;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .edit-button:hover {
+            background-color: #218838;
+            transform: scale(1.05);
+        }
+
+        .delete-button {
+            background-color: #dc3545;
+            color: white;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .delete-button:hover {
+            background-color: #c82333;
+            transform: scale(1.05);
+        }
+
+        .product-image {
+            text-align: center;
+        }
+
+        .product-image img {
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .operation-column {
+            width: 150px; /* 固定操作欄的寬度 */
+            text-align: center; /* 將整個操作欄置中 */
+            vertical-align: middle; /* 垂直置中 */
+        }
+
+        .no-products {
+            text-align: center;
+            color: #888;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+
+    </style>
+   
+</head>
+<body>
+    <!-- 引入 header -->
+    <div th:replace="~{fragments/header :: header}"></div>
+
+    <div class="container">
+        <!-- 引入 sidebar -->
+        <div th:replace="~{fragments/sidebar :: sidebar}"></div>
+
+        <!-- 商品內容區 -->
+        <div class="product-section">
+            <div class="category-title">所有商品</div>
+
+            <div th:if="${productList != null}">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>商品ID</th>
+                            <th>商品名稱</th>
+                            <th>圖片</th>
+                            <th class="operation-column">操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="product : ${productList}">
+                            <td th:text="${product.productId}"></td>
+                            <td th:text="${product.productName}"></td>
+                            <td class="product-image">
+                                <img th:if="${product.imageUrl.startsWith('data:image')}" th:src="${product.imageUrl}" alt="商品圖片">
+                                <img th:if="${!product.imageUrl.startsWith('data:image')}" th:src="@{${product.imageUrl}}" alt="商品圖片">
+                            </td>
+                            <td class="operation-column">
+                                <div class="product-buttons">
+                                    <a th:href="@{/mall/product/edit/{productId}(productId=${product.productId})}" class="btn edit-button">修改</a>
+                                    <a th:href="@{/mall/product/delete/{productId}(productId=${product.productId})}" class="btn delete-button">刪除</a>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="no-products" th:if="${productList == null}">沒有商品</div>
+        </div>
+    </div>
+</body>
+</html>

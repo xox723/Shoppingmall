@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>創建商品</title>
+    <link rel="stylesheet" href="/css/productdetail.css">
+</head>
+<body>
+
+    <div class="form-container">
+        <!-- 商品圖片區域 -->
+        <div class="image-container" id="imagePreview">
+            <div>商品圖片預覽</div>
+        </div>
+
+        <!-- 商品詳細內容 -->
+        <div class="form-content">
+            <h2>創建商品</h2>
+
+            <!-- 錯誤消息展示 -->
+            <div th:if="${errorMessage}" class="error-message" th:text="${errorMessage}"></div>
+
+            <!-- 表單提交 -->
+            <form th:action="@{/mall/product}" method="post" enctype="multipart/form-data">
+                <label for="productName">商品名稱：</label>
+                <input type="text" id="productName" name="productName" required>
+
+                <label for="category">商品分類：</label>
+                <select id="category" name="category" required>
+                    <option value="FOOD" th:selected="${productRequest.category == 'FOOD'}">食品</option>
+                    <option value="CLOTHING" th:selected="${productRequest.category == 'CLOTHING'}">服裝</option>
+                    <option value="SHELTER" th:selected="${productRequest.category == 'SHELTER'}">居住</option>
+                    <option value="TRANSPORTATION" th:selected="${productRequest.category == 'TRANSPORTATION'}">交通</option>
+                    <option value="EDUCATION" th:selected="${productRequest.category == 'EDUCATION'}">教育</option>
+                    <option value="ENTERTAINMENT" th:selected="${productRequest.category == 'ENTERTAINMENT'}">娛樂</option>
+                </select>
+
+                <label for="price">商品價格：</label>
+                <input type="number" id="price" name="price" required>
+
+                <label for="stock">商品庫存：</label>
+                <input type="number" id="stock" name="stock" required>
+
+                <label for="description">商品描述：</label>
+                <textarea id="description" name="description" required></textarea>
+
+                <!-- 圖片上傳欄位 -->
+                <label for="imageUrl">商品圖片：</label>
+                <input type="file" id="imageUrl" name="imageUrl" accept="image/*" onchange="previewImage(event)">
+
+                <!-- 送出按鈕 -->
+                <button type="submit">送出</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // 圖片預覽功能
+        function previewImage(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const base64String = e.target.result;
+
+                    // 更新圖片預覽
+                    const preview = document.getElementById("imagePreview");
+                    preview.innerHTML = '<img src="' + base64String + '" alt="商品圖片" style="max-width: 100%; max-height: 100%;">';
+                };
+                reader.readAsDataURL(file);
+            } else {
+                // 清除預覽
+                const preview = document.getElementById("imagePreview");
+                preview.innerHTML = '<div>商品圖片預覽</div>';
+            }
+        }
+    </script>
+
+</body>
+</html>

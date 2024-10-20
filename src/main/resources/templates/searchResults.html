@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>搜尋結果</title>
+</head>
+<body>
+
+    <h2>搜尋結果</h2>
+
+    <div>
+        <!-- 使用 Thymeleaf 動態渲染商品列表 -->
+        <ul>
+            <li th:each="product : ${productList}">
+                <a th:href="@{/mall/product/edit/{productId}(productId=${product.productId})}" th:text="${product.productName}">商品名稱</a>
+            </li>
+        </ul>
+    </div>
+
+    <!-- 如果沒有商品，顯示 "沒有找到商品" -->
+    <div th:if="${productList.size()} == 0">
+        沒有找到商品
+    </div>
+
+</body>
+</html>

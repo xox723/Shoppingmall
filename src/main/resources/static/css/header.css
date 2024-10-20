@@ -1,0 +1,14 @@
+/* src/main/resources/static/css/header.css */
+
+.navbar {
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.navbar .btn {
+    transition: all 0.3s ease;
+}
+
+.navbar .btn:hover {
+    transform: scale(1.05);
+}
